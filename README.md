@@ -63,6 +63,7 @@ for csv_file in csv_files:
 ```
 
 The output of the above code snippet is shown below:
+
 | File Name                      | CSV Size (bytes) | Parquet Size (bytes) | Size Ratio | Write Time (seconds) |
 |--------------------------------|------------------|----------------------|------------|----------------------|
 | kafka_ratings_amplified.csv    | 86,430,501       | 20,522,693           | 0.24       | 0.41                 |
@@ -126,7 +127,8 @@ print(f"Model Mean Squared Error: {mse:.2f}")
 ```
 
 The output of the above code snippet is:
-|||
+
+| | |
 |--------------------------------|------------------|
 | Training time (Parquet) | 0.84 seconds |
 | Model Mean Squared Error | 0.94 |
