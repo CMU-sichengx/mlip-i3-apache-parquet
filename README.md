@@ -1,4 +1,7 @@
 # Harnessing the Power of Apache Parquet: Revolutionizing Data Storage for Movie Streaming Giants
+* Code can be found at: https://github.com/CMU-sichengx/mlip-i3-apache-parquet
+
+---
 
 In the era of big data, organizations across industries are constantly seeking efficient ways to store, process, and analyze vast amounts of information. The movie streaming sector, with its ever-expanding libraries and intricate viewer data, faces unique challenges in managing data efficiently. This is where Apache Parquet steps in—a columnar storage file format optimized for use with data analysis tools. This blog post delves into the problems addressed by Apache Parquet, its utility in a production machine learning system within a movie streaming scenario, and a balanced view of its strengths and limitations. To bring our discussion to life, we'll explore practical Python examples, including benchmarking and file size comparisons.
 
@@ -33,21 +36,28 @@ In this section, we put Apache Parquet in action by appllying it to a real datas
 - **Efficient Data Compression**: Parquet's ability to compress data at the column level leads to substantial storage savings, a key advantage for platforms dealing with massive volumes of streaming data and metadata. 
 
 ```python
-csv_files = [
-    'kafka_ratings_amplified.csv',
-    'kafka_ratings_m2_online.csv',
-    'm1_user_details.csv',
-    'movie_details.csv'
+import pandas as pd
+import os
+import time
+
+# Load the CSV data
+files = [
+    'kafka_ratings_amplified',
+    'kafka_ratings_m2_online',
+    'm1_user_details',
+    'movie_details'
 ]
 
-for csv_file in csv_files:
+csv_files = [f + ".csv" for f in files]
+parquet_files = [f + '.parquet' for f in files]
+
+for csv_file, parquet_file in zip(csv_files, parquet_files):
     df = pd.read_csv(csv_file)
 
     # Record the size of the CSV
     csv_size = os.path.getsize(csv_file)
 
     # Convert to Parquet
-    parquet_file = 'movies.parquet'
     start_time = time.time()
     df.to_parquet(parquet_file, engine='pyarrow')
     write_time = time.time() - start_time
@@ -140,7 +150,7 @@ However, despite its strengths, Apache Parquet is not without limitations. Its o
 
 In essence, while Apache Parquet significantly streamlines data storage and access for analytical queries, understanding its limitations is crucial for integrating it effectively into a technology stack. For movie streaming services and other data-centric applications, leveraging Parquet's strengths while mitigating its limitations can lead to more efficient data processing and a competitive edge in the market.
 
-### References
+### References and Appendix
 * Image 1 about Row- v.s. Column-oriented storage https://help.sap.com/docs/SAP_HANA_PLATFORM/52715f71adba4aaeb480d946c742d1f6/8c1fb4ff2f9640ee90e2dccea49c1739.html
 
 * Image 2 about Apache Parquet layout visualization: https://parquet.apache.org/docs/file-format/
